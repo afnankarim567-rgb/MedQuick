@@ -2,6 +2,7 @@ name: Auto Update Medicine Data
 
 on:
   schedule:
+    # প্রতি রবিবার রাত ১২টায় (UTC ১৮:০০) স্বয়ংক্রিয়ভাবে রান হবে
     - cron: '0 18 * * 0'
   workflow_dispatch:
 
@@ -21,13 +22,17 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install requests beautifulsoup4 pandas
+          pip install requests beautifulsoup4 pandas supabase
 
-      - name: Run Scraper Script
+      - name: 1. Run Scraper Script (DGDA)
         run: |
           python dgda_all.py
 
-      - name: Compress & Upload to Supabase
+      - name: 2. Merge Static Data with DGDA
+        run: |
+          python merge_medicines.py
+
+      - name: 3. Compress & Upload to Supabase
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
