@@ -23,9 +23,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests beautifulsoup4
 
-      - name: Run Scraper Script
+     - name: Run Scraper Script
         run: |
-          python dgda_scraper.py
+          python dgda_all.py
 
       - name: Compress & Upload to Supabase
         env:
