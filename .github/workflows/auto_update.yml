@@ -30,7 +30,7 @@ jobs:
 
       - name: 2. Merge Static Data with DGDA
         run: |
-          python merge_medicines.py
+          python merge_medicine.py
 
       - name: 3. Compress & Upload to Supabase
         env:
